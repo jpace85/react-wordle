@@ -11,12 +11,12 @@ const useWordle = (solution) => {
     // e.g. [{key: 'a', color: 'green'}]
     const formatGuess = () => {
         let solutionArray = [...solution]
-        let formattedGuess = [...currentGuess].map((l)=>{
-            return {key: l, color: 'grey'}
+        let formattedGuess = [...currentGuess].map((l) => {
+            return { key: l, color: 'grey' }
         })
 
         // find any green letters
-        formattedGuess.forEach((l, i)=>{
+        formattedGuess.forEach((l, i) => {
             if (solutionArray[i] === l.key) {
                 formattedGuess[i].color = 'green'
                 solutionArray[i] = null
@@ -24,7 +24,7 @@ const useWordle = (solution) => {
         })
 
         // find any yellow letters
-        formattedGuess.forEach((l, i)=>{
+        formattedGuess.forEach((l, i) => {
             if (solutionArray.includes(l.key) && l.color !== 'green') {
                 formattedGuess[i].color = 'yellow'
                 solutionArray[solutionArray.indexOf(l.key)] = null
@@ -41,23 +41,23 @@ const useWordle = (solution) => {
         if (currentGuess === solution) {
             setIsCorrect(true)
         }
-        setGuesses((prevGuesses)=>{
+        setGuesses((prevGuesses) => {
             let newGuesses = [...prevGuesses]
             newGuesses[turn] = formattedGuess
             return newGuesses
         })
-        setHistory((prevHistory)=> {
+        setHistory((prevHistory) => {
             return [...prevHistory, currentGuess]
         })
-        setTurn((prevTurn)=>{
-            return prevTurn+1
+        setTurn((prevTurn) => {
+            return prevTurn + 1
         })
         setCurrentGuess('')
     }
 
     // handle keyup event & track current guess
     // if user presses enter, add the new guess
-    const handleKeyup = ({key}) => {
+    const handleKeyup = ({ key }) => {
 
         if (key === 'Enter') {
             // only add guess if turn is less than 5
@@ -71,7 +71,7 @@ const useWordle = (solution) => {
                 return
             }
             // word must be 5 characters long
-            if (currentGuess.length !==5) {
+            if (currentGuess.length !== 5) {
                 console.log('word must be 5 chars long')
                 return
             }
@@ -80,7 +80,7 @@ const useWordle = (solution) => {
         }
 
         if (key === 'Backspace') {
-            setCurrentGuess((prev)=> {
+            setCurrentGuess((prev) => {
                 return prev.slice(0, -1)
             })
             return
@@ -88,7 +88,7 @@ const useWordle = (solution) => {
 
         if (/^[A-Za-z]$/.test(key)) {
             if (currentGuess.length < 5) {
-                setCurrentGuess((prev)=>{
+                setCurrentGuess((prev) => {
                     return prev + key
                 })
             }
@@ -96,7 +96,7 @@ const useWordle = (solution) => {
 
     }
 
-    return {turn, currentGuess, guesses, isCorrect, handleKeyup}
+    return { turn, currentGuess, guesses, isCorrect, handleKeyup }
 
 }
 
