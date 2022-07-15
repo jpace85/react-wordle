@@ -16,7 +16,7 @@ const Row = ({ guess, currentGuess }) => {
         let letters = currentGuess.split('')
 
         return (
-            <div class='row current'>
+            <div className='row current'>
                 {letters.map((letter, i) => (
                     <div key={i} className="filled">{letter}</div>
                 ))}
