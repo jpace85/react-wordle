@@ -6,6 +6,7 @@ const useWordle = (solution) => {
     const [guesses, setGuesses] = useState([...Array(6)]); // each guess is an array. Stores users past formated guesses.
     const [history, setHistory] = useState([]); // each guess is an string. Stores users past string guesses. Prevents user from submitting duplicate guesses
     const [isCorrect, setIsCorrect] = useState(false); // only changes to true when user wins the game
+    const [usedKeys, setUsedKeys] = useState({}); // {a: 'green', b: 'yellow', c: 'grey'}
 
     // format a guess into an array of letter objects
     // e.g. [{key: 'a', color: 'green'}]
@@ -52,6 +53,28 @@ const useWordle = (solution) => {
         setTurn((prevTurn) => {
             return prevTurn + 1
         })
+        setUsedKeys((prevUsedKeys) => {
+            let newKeys = { ...prevUsedKeys }
+            formattedGuess.forEach((l) => {
+                const currentColor = newKeys[l.key]
+
+                if (l.color === 'green') {
+                    newKeys[l.key] = 'green'
+                    return
+                }
+
+                if (l.color === 'yellow' && currentColor !== 'green') {
+                    newKeys[l.key] = 'yellow'
+                    return
+                }
+
+                if (l.color === 'grey' && currentColor !== 'green' && currentColor !== 'yellow') {
+                    newKeys[l.key] = 'grey'
+                    return
+                }
+            })
+            return newKeys
+        })
         setCurrentGuess('')
     }
 
@@ -96,7 +119,7 @@ const useWordle = (solution) => {
 
     }
 
-    return { turn, currentGuess, guesses, isCorrect, handleKeyup }
+    return { turn, currentGuess, guesses, isCorrect, handleKeyup, usedKeys }
 
 }
 
