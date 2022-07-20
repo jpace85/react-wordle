@@ -7,3 +7,9 @@ To run the app locally run `npm run start`
 This app using a package called `json-server` which basically turns the json data into an api that we can fetch from.
 This needs to be running in order to play the app. To do so run:
 `json-server ./data/db.json`
+
+# TODO
+
+* Add TS to the app
+* Add a Dockerfile, config, deployment stuff to the app
+* Connect to an api with more words
